@@ -1,3 +1,6 @@
 [submodule "services/users"]
 	path = services/users
-	url = /Users/davida/Personal/testdriven-app/services/users
+	url = https://github.com/davidadamojr/users-service
+[submodule "services/user"]
+	path = services/user
+	url = https://github.com/davidadamojr/users-service

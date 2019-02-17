@@ -18,7 +18,7 @@ before_script:
 script:
   - docker container ls
   - docker-compose -f docker-compose-dev.yml exec users python manage.py test
-  - docker compose -f docker-compose-dev.yml exec users black -l 88 project
+  - docker-compose -f docker-compose-dev.yml exec users black -l 88 project
   - docker-compose -f docker-compose-dev.yml exec users flake8 project
 
 after_script:

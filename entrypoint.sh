@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo "Waiting for postgres..."
+sleep 2
 
 # while ! nc -z users-db 5432; do
 #    echo "Waiting for Postgres..."

@@ -1,3 +1,0 @@
-[submodule "services/users"]
-	path = services/users
-	url = https://github.com/davidadamojr/users-service

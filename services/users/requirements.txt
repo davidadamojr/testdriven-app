@@ -8,3 +8,4 @@ coverage==4.5.2
 flake8==3.6.0
 black
 flask-debugtoolbar==0.10.1
+flask-restful==0.3.7

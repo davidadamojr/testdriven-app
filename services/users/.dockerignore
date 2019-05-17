@@ -1,5 +1,8 @@
+node_modules
+coverage
+build
 env
-.dockerignore
-Dockerfile-dev
-Dockerfile-prod
 htmlcov
+.dockerignore
+Dockerfile
+Dockerfile-prod

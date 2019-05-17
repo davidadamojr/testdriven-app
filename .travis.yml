@@ -23,4 +23,4 @@ script:
   - docker-compose exec users flake8 project
 
 after_script:
-  - docker-compose -f docker-compose-dev.yml down
+  - docker-compose down

@@ -21,7 +21,6 @@ script:
   - docker-compose exec users python manage.py test
   - docker-compose exec users black -l 79 project
   - docker-compose exec users flake8 project
-  - docker-compose exec client npm test
 
 after_script:
   - docker-compose down

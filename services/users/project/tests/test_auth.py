@@ -1,6 +1,5 @@
 import json
 import unittest
-import time
 
 from flask import current_app
 from project.tests.base import BaseTestCase

@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Form from './components/Form';
 import Logout from './components/Logout';
+import UserStatus from './components/UserStatus';
 
 class App extends Component {
     constructor() {
@@ -105,7 +106,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <NavBar title={this.state.title} />
+                <NavBar title={this.state.title} isAuthenticated={this.state.isAuthenticated} />
                 <section className="section">
                     <div className="container">
                         <div className="columns">
@@ -148,6 +149,11 @@ class App extends Component {
                                     <Route exact path='/logout' render={() => (
                                         <Logout
                                             logoutUser={this.logoutUser}
+                                            isAuthenticated={this.state.isAuthenticated}
+                                        />
+                                    )} />
+                                    <Route exact path='/status' render={() => (
+                                        <UserStatus
                                             isAuthenticated={this.state.isAuthenticated}
                                         />
                                     )} />

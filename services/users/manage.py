@@ -1,5 +1,5 @@
 import unittest
-
+import sys
 import coverage
 from flask.cli import FlaskGroup
 from project import create_app, db
@@ -50,7 +50,7 @@ def test():
     if result.wasSuccessful():
         return 0
 
-    return 1
+    sys.exit(result)
 
 
 @cli.command('seed_db')

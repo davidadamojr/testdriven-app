@@ -15,6 +15,7 @@ class UserStatus extends Component {
     }
 
     componentDidMount() {
+        
         if (this.props.isAuthenticated) {
             this.getUserStatus();
         }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Axios from 'axios';
+import axios from 'axios';
 
 class Form extends Component {
     constructor (props) {
@@ -73,7 +73,7 @@ class Form extends Component {
                     <h1 className="title is-1">Register</h1>
                 }
                 <hr/><br/>
-                <form onSubmit={(event) => this.props.handleUserFormSubmit(event)}>
+                <form onSubmit={(event) => this.handleUserFormSubmit(event)}>
                     {this.props.formType === 'Register' &&
                         <div className="field">
                             <input
@@ -82,8 +82,8 @@ class Form extends Component {
                                 type="text"
                                 placeholder="Enter a username"
                                 required
-                                value={this.props.formData.username}
-                                onChange={this.props.handleFormChange}    
+                                value={this.state.formData.username}
+                                onChange={this.handleFormChange}    
                             />
                         </div>
                     }
@@ -94,8 +94,8 @@ class Form extends Component {
                             type="email"
                             placeholder="Enter an email address"
                             required
-                            value={this.props.formData.email}
-                            onChange={this.props.handleFormChange}
+                            value={this.state.formData.email}
+                            onChange={this.handleFormChange}
                         />
                     </div>
                     <div className="field">
@@ -105,8 +105,8 @@ class Form extends Component {
                             type="password"
                             placeholder="Enter a password"
                             required
-                            value={this.props.formData.password}
-                            onChange={this.props.handleFormChange}
+                            value={this.state.formData.password}
+                            onChange={this.handleFormChange}
                         />
                     </div>
                     <input

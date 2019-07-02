@@ -64,19 +64,15 @@ class App extends Component {
                                     <Route exact path='/register' render={() => (
                                         <Form
                                             formType={'Register'}
-                                            formData={this.state.formData}
-                                            handleUserFormSubmit={this.handleUserFormSubmit}
-                                            handleFormChange={this.handleFormChange}
                                             isAuthenticated={this.state.isAuthenticated}
+                                            loginUser={this.loginUser}
                                         />
                                     )} />
                                     <Route exact path='/login' render={() => (
                                         <Form
                                             formType={'Login'}
-                                            formData={this.state.formData}
-                                            handleUserFormSubmit={this.handleUserFormSubmit}
-                                            handleFormChange={this.handleFormChange}
                                             isAuthenticated={this.state.isAuthenticated}
+                                            loginUser={this.loginUser}
                                         />
                                     )} />
                                     <Route exact path='/logout' render={() => (

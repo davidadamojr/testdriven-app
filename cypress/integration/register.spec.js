@@ -1,13 +1,17 @@
 const randomstring = require('randomstring');
 const username = randomstring.generate();
 const email = `${username}@test.com`;
+const password = 'wrongpassword';
 
 describe('Register', () => {
     it('should display the registration form', () => {
         cy
           .visit('/register')
           .get('h1').contains('Register')
-          .get('form');
+          .get('form')
+          .get('input[disabled]')
+          .get('.validation-list')
+          .get('.validation-list > .error').first().contains('Username must be greater than 5 characters.');
     });
 
     it('should allow a user to register', () => {
@@ -31,5 +35,102 @@ describe('Register', () => {
               .get('.navbar-item').contains('Log In').should('not.be.visible')
               .get('.navbar-item').contains('Register').should('not.be.visible');
         });
+    });
+
+    it('should throw an error if the username is taken', () => {
+      // register user with duplicate user name
+      cy
+        .visit('/register')
+        .get('input[name="username"]').type(username)
+        .get('input[name="email"]').type(`${email}unique`)
+        .get('input[name="password"]').type(password)
+        .get('input[type="submit"]').click();
+
+      // assert user registration failed
+      cy.contains('All Users').should('not.be.visible');
+      cy.contains('Register');
+      cy.get('.navbar-burger').click();
+      cy.get('.navbar-menu').within(() => {
+        cy
+          .get('.navbar-item').contains('User Status').should('not.be.visible')
+          .get('.navbar-item').contains('Log Out').should('not.be.visible')
+          .get('.navbar-item').contains('Log In')
+          .get('.navbar-item').contains('Register');
+      });
+      cy
+        .get('.notification.is-success').should('not.be.visible')
+        .get('.notification.is-danger').contains('That user already exists.');
+    });
+
+    it('should throw an error if the email is taken', () => {
+      // register user with duplicate email
+      cy
+        .visit('/register')
+        .get('input[name="username"]').type(`${username}unique`)
+        .get('input[name="email"]').type(email)
+        .get('input[name="password"]').type(password)
+        .get('input[type="submit"]').click();
+
+      // assert user registration failed
+      cy.contains('All Users').should('not.be.visible');
+      cy.contains('Register');
+      cy.get('.navbar-burger').click();
+      cy.get('.navbar-menu').within(() => {
+        cy
+          .get('.navbar-item').contains('User Status').should('not.be.visible')
+          .get('.navbar-item').contains('Log Out').should('not.be.visible')
+          .get('.navbar-item').contains('Log In')
+          .get('.navbar-item').contains('Register');
+      });
+      cy
+        .get('.notification.is-success').should('not.be.visible')
+        .get('.notification.is-danger').contains('That user already exists.');
+    });
+
+    it('should throw an error if the credentials are incorrect', () => {
+      // attempt to log in
+      cy
+        .visit('/login')
+        .get('input[name="email"]').type('incorrect@email.com')
+        .get('input[name="password"]').type(password)
+        .get('input[type="submit"]').click();
+
+      // assert user login failed
+      cy.contains('All Users').should('not.be.visible');
+      cy.contains('Log In');
+      cy.get('.navbar-burger').click();
+      cy.get('.navbar-menu').within(() => {
+        cy
+          .get('.navbar-item').contains('User Status').should('not.be.visible')
+          .get('.navbar-item').contains('Log Out').should('not.be.visible')
+          .get('.navbar-item').contains('Log In')
+          .get('.navbar-item').contains('Register');
+      });
+      cy
+        .get('.notification.is-success').should('not.be.visible')
+        .get('.notification.is-danger').contains('Login failed');
+
+      // attempt to log in
+      cy
+        .get('a').contains('Log In').click()
+        .get('input[name="email"]').type(email)
+        .get('input[name="password"]').type('incorrectpassword')
+        .get('input[type="submit"]').click()
+        .wait(100);
+
+      // assert user login failed
+      cy.contains('All Users').should('not.be.visible');
+      cy.contains('Log In');
+      cy.get('.navbar-burger').click();
+      cy.get('.navbar-menu').within(() => {
+        cy
+          .get('.navbar-item').contains('User Status').should('not.be.visible')
+          .get('.navbar-item').contains('Log Out').should('not.be.visible')
+          .get('.navbar-item').contains('Log In')
+          .get('.navbar-item').contains('Register');
+      });
+      cy
+        .get('.notification.is-success').should('not.be.visible')
+        .get('.notification.is-danger').contains('Login failed')
     });
 });

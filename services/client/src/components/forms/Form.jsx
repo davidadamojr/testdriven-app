@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { registerFormRules, loginFormRules } from './form-rules.js';
+import FormErrors from './FormErrors.jsx';
 
 class Form extends Component {
     constructor (props) {
@@ -10,7 +12,10 @@ class Form extends Component {
                 username: '',
                 email: '',
                 password: ''
-            }
+            },
+            registerFormRules: registerFormRules,
+            loginFormRules: loginFormRules,
+            valid: false,
         };
         this.handleUserFormSubmit = this.handleUserFormSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -36,6 +41,7 @@ class Form extends Component {
         const obj = this.state.formData;
         obj[event.target.name] = event.target.value;
         this.setState(obj);
+        this.validateForm();
     }
 
     handleUserFormSubmit(event) {
@@ -56,12 +62,29 @@ class Form extends Component {
                 this.clearForm();
                 this.props.loginUser(res.data.auth_token);
             })
-            .catch((err) => { console.log(err); });
+            .catch((err) => { 
+                if (formType === 'Login') {
+                    this.props.createMessage('Login failed.', 'danger');
+                }
+
+                if (formType === 'Register') {
+                    this.props.createMessage('That user already exists.', 'danger');
+                }
+            });
+    }
+
+    validateForm() {
+        this.setState({valid: true});
     }
 
     render() {
         if (this.props.isAuthenticated) {
             return <Redirect to='/' />;
+        }
+
+        let formRules = this.state.loginFormRules;
+        if (this.props.formType === 'Register') {
+            formRules = this.state.registerFormRules;
         }
 
         return (
@@ -73,6 +96,10 @@ class Form extends Component {
                     <h1 className="title is-1">Register</h1>
                 }
                 <hr/><br/>
+                <FormErrors
+                    formType={this.props.formType}
+                    formRules={formRules}
+                />
                 <form onSubmit={(event) => this.handleUserFormSubmit(event)}>
                     {this.props.formType === 'Register' &&
                         <div className="field">
@@ -113,6 +140,7 @@ class Form extends Component {
                         type="submit"
                         className="button is-primary is-medium is-fullwidth"
                         value="Submit"
+                        disabled={!this.state.valid}
                     />
                 </form>
             </div>

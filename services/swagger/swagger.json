@@ -51,6 +51,15 @@
                 "responses": {
                     "200": {
                         "description": "User added"
+                    },
+                    "201": {
+                        "description": "success"
+                    },
+                    "400": {
+                        "description": "Invalid payload, or email already exists"
+                    },
+                    "401": {
+                        "description": "You do not have permission to do that."
                     }
                 }
             }
@@ -73,6 +82,9 @@
                 "responses": {
                     "200": {
                         "description": "user object"
+                    },
+                    "404": {
+                        "description": "User does not exist"
                     }
                 }
             }
@@ -92,8 +104,11 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "user object"
+                    "201": {
+                        "description": "Successfully registered"
+                    },
+                    "400": {
+                        "description": "Invalid payload or user already exists"
                     }
                 }
             }
@@ -115,6 +130,15 @@
                 "responses": {
                     "200": {
                         "description": "Successfully logged in"
+                    },
+                    "400": {
+                        "description": "Invalid payload"
+                    },
+                    "404": {
+                        "description": "User does not exist"
+                    },
+                    "500": {
+                        "description": "Error"
                     }
                 }
             }
@@ -130,6 +154,9 @@
                 "responses": {
                     "200": {
                         "description": "user object"
+                    },
+                    "403": {
+                        "description": "Provide a valid auth token"
                     }
                 }
             }

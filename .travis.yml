@@ -12,7 +12,7 @@ env:
   USERS_DB: testdriven-users_db
   USERS_DB_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/users/project/db
   CLIENT: test-driven-client
-  CLIENT_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/users/project/db
+  CLIENT_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/client
   SWAGGER: test-driven-swagger
   SWAGGER_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/swagger
   SECRET_KEY: my_precious

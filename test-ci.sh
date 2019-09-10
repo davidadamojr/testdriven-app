@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# TODO: consider pulling docker images from ECR to speed up this build, 
+# instead of building the images from scratch each time
+
 env=$1
 fails=""
 

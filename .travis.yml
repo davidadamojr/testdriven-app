@@ -9,7 +9,7 @@ env:
   MAIN_REPO: https://github.com/davidadamojr/testdriven-app.git
   USERS: test-driven-users
   USERS_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/users
-  USERS_DB: testdriven-users_db
+  USERS_DB: test-driven-users_db
   USERS_DB_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/users/project/db
   CLIENT: test-driven-client
   CLIENT_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/client

@@ -45,7 +45,7 @@
             "name": "users-db",
             "image": "%s.dkr.ecr.us-east-1.amazonaws.com/test-driven-users_db:staging",
             "essential": true,
-            "memoryResearvation": 300,
+            "memoryReservation": 300,
             "portMappings": [
                 {
                     "hostPort": 0,

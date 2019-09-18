@@ -42,7 +42,7 @@ then
 
             # swagger
             template="ecs_swagger_stage_taskdefinition.json"
-            task_template=$(cat "ecs/template")
+            task_template=$(cat "ecs/$template")
             task_def=$(printf "$task_template" $AWS_ACCOUNT_ID)
             register_definition
         }

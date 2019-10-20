@@ -92,7 +92,7 @@ class App extends Component {
                                 <br />
                                 <Switch>
                                     <Route exact path='/' render={() => (
-                                        <Exercises />
+                                        <Exercises isAuthenticated={this.state.isAuthenticated} />
                                     )} />
                                     <Route exact path='/all-users' render={() => (
                                         <UsersList

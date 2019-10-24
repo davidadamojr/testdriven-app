@@ -37,7 +37,7 @@ describe('Exercises', () => {
         // assert user can submit an exercise
         cy
           .get('button').contains('Run Code').click()
-          .wait(600)
+          .wait(1000)
           .get('h5 > .grade-text').contains('Incorrect!');
     })
 })

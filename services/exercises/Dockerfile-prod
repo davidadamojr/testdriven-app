@@ -3,6 +3,7 @@ FROM python:3.7.2-slim
 
 # install netcat
 RUN apt-get update && \
+    apt-get -y install python3-dev gcc && \
     apt-get -y install netcat && \
     apt-get clean
 

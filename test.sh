@@ -18,13 +18,19 @@ server() {
     inspect $? users-black 
     docker-compose exec users flake8 project
     inspect $? users-lint
+    docker-compose exec exercises python manage.py test
+    inspect $? exercises
+    docker-compose exec exercises black -l 79 project
+    inspect $? exercises-black
+    docker-compose exec exercises flake8 project
+    inspect $? exercises-lint
     docker-compose down
 }
 
 # run client-side tests
 client() {
     docker-compose up -d --build
-    docker-compose exec client npm test -- --coverage
+    docker-compose exec client npm test -- -u --coverage
     inspect $? client
     docker-compose down
 }
@@ -33,7 +39,7 @@ client() {
 e2e() {
     docker-compose -f docker-compose-stage.yml up -d --build
     docker-compose -f docker-compose-stage.yml exec users python manage.py recreate_db
-    ./node_modules/.bin/cypress run --config baseUrl=http://localhost
+    ./node_modules/.bin/cypress run --config baseUrl=http://localhost --env REACT_APP_API_GATEWAY_URL=$REACT_APP_API_GATEWAY_URL,LOAD_BALANCER_STAGE_DNS_NAME=http://localhost
     inspect $? e2e
     docker-compose -f docker-compose-stage.yml down
 }
@@ -47,6 +53,10 @@ all() {
     inspect $? users-black
     docker-compose exec users flake8 project
     inspect $? users-lint
+    docker-compose exec exercises python manage.py test
+    inspect $? users
+    docker-compose exec exercises flake8 project
+    inspect $? exercises-lint
     docker-compose exec client npm test -- --coverage
     inspect $? client
     docker-compose down

@@ -58,7 +58,7 @@ describe('Message', () => {
           .get('input[name="email"]').type(email)
           .get('input[name="password"]').type(password)
           .get('input[type="submit"]').click()
-          .wait(100);
+          .wait(80);
 
         // assert flash message is removed after three seconds
         cy

@@ -37,6 +37,7 @@ e2e() {
     ./node_modules/.bin/cypress run --config baseUrl=http://localhost --env REACT_APP_API_GATEWAY_URL=$REACT_APP_API_GATEWAY_URL,LOAD_BALANCER_DNS_NAME=$LOAD_BALANCER_DNS_NAME
     inspect $? e2e
     docker-compose -f docker-compose-$1.yml down
+    # echo "Skipping e2e tests..."
 }
 
 # run appropriate tests

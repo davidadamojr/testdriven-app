@@ -33,7 +33,7 @@ then
         docker tag $USERS:$COMMIT $REPO/$USERS:$TAG
         docker push $REPO/$USERS:$TAG
         
-        if [ "$TRAVIS_BRANCH" == "staging"]
+        if [ "$TRAVIS_BRANCH" == "staging" ]
         then
             # users db
             docker build $USERS_DB_REPO -t $USERS_DB:$COMMIT -f Dockerfile

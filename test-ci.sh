@@ -23,6 +23,8 @@ dev() {
     inspect $? users-lint
     docker-compose exec exercises python manage.py test
     inspect $? exercises
+    docker-compose exec exercises black -l 79 project
+    inspect $? exercises-black
     docker-compose exec exercises flake8 project
     inspect $? exercises-lint
     docker-compose exec client npm test -- --coverage

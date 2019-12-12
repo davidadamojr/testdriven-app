@@ -25,6 +25,11 @@ const exercises = [
     }
 ];
 
+beforeEach(() => {
+    console.error = jest.fn();
+    console.error.mockClear();
+})
+
 test('Exercises render properly when not authenticated', () => {
     const onDidMount = jest.fn();
     Exercises.prototype.componebtDidMount = onDidMount;

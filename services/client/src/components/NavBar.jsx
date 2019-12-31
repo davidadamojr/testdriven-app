@@ -49,7 +49,8 @@ const NavBar = (props) => (
 )
 
 NavBar.propTypes = {
-    users: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
 };
 
 export default NavBar;

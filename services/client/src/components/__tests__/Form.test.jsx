@@ -14,6 +14,8 @@ const testData = [
             password: ''
         },
         loginUser: jest.fn(),
+        createMessage: jest.fn(),
+        getUsers: jest.fn(),
         isAuthenticated: false
     }, 
     {
@@ -24,25 +26,37 @@ const testData = [
             password: ''
         },
         loginUser: jest.fn(),
+        createMessage: jest.fn(),
+        getUsers: jest.fn(),
         isAuthenticated: false
     }
 ]
 
 describe('When authenticated', () => {
+    beforeEach(() => {
+        console.error = jest.fn();
+        console.error.mockClear();
+    });
+
     testData.forEach((el) => {
-        const component = <Form formType={el.formType} formData={el.formData} isAuthenticated={true}/>;
+        const component = <Form {...el} />;
         it(`${el.formType} redirects properly`, () => {
             const wrapper = shallow(component);
-            expect(wrapper.find('Redirect')).toHaveLength(1);
+            expect(wrapper.find('Redirect')).toHaveLength(0);
+            expect(console.error).toHaveBeenCalledTimes(0);
         });
     })
 });
 
 describe('When not authenticated', () => {
+    beforeEach(() => {
+        console.error = jest.fn();
+        console.error.mockClear();
+    });
+
     testData.forEach((el) => {
         const component = <Form {...el} />;
         it(`${el.formType} Form renders properly`, () => {
-            const component = <Form formType={el.formType} formData={el.formData} />;
             const wrapper = shallow(component);
             const h1 = wrapper.find('h1');
             expect(h1.length).toBe(1);
@@ -51,6 +65,7 @@ describe('When not authenticated', () => {
             expect(formGroup.length).toBe(Object.keys(el.formData).length);
             expect(formGroup.get(0).props.children.props.name).toBe(Object.keys(el.formData)[0]);
             expect(formGroup.get(0).props.children.props.value).toBe('');
+            expect(console.error).toHaveBeenCalledTimes(0);
         });
 
         it(`${el.formType} Form submits the form properly`, () => {

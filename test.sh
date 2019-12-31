@@ -24,6 +24,12 @@ server() {
     inspect $? exercises-black
     docker-compose exec exercises flake8 project
     inspect $? exercises-lint
+    docker-compose exec scores python manage.py test
+    inspect $? scores
+    docker-compose exec scores black -l 79 project
+    inspect $? scores-black
+    docker-compose exec scores flake8 project
+    inspect $? scores-lint
     docker-compose down
 }
 
@@ -57,6 +63,12 @@ all() {
     inspect $? users
     docker-compose exec exercises flake8 project
     inspect $? exercises-lint
+    docker-compose exec scores black -l 79 project
+    inspect $? scores-black
+    docker-compose exec scores flake8 project
+    inspect $? e2e
+    docker-compose exec scores python manage.py test
+    inspect $? scores
     docker-compose exec client npm test -- --coverage
     inspect $? client
     docker-compose down

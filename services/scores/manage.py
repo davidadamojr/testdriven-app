@@ -78,5 +78,6 @@ def seed_db():
             db.session.add(Score(user_id=user['id'], exercise_id=exercise['id']))
     db.session.commit()
 
+
 if __name__ == '__main__':
     cli()

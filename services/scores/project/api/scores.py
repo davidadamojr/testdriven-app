@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from sqlalchemy import exc
 
 from project.api.utils import authenticate
 from project.api.models import Score
@@ -41,7 +42,7 @@ def get_single_score_by_user(id):
 
 @scores_blueprint.route("/scores", methods=["POST"])
 @authenticate
-def add_score(response):
+def add_score(auth_response):
     data = request.json
     score = Score(
         user_id=data["user_id"],
@@ -54,19 +55,26 @@ def add_score(response):
     return jsonify(response), 201
 
 
-@scores_blueprint.route("/scores/<exercise_id>", methods=["PUT"])
+@scores_blueprint.route("/scores/<int:exercise_id>", methods=["PUT"])
 @authenticate
-def update_score_by_exercise_id(response, exercise_id):
+def update_score_by_exercise_id(auth_response, exercise_id):
     data = request.json
-    score = Score.query.filter_by(exercise_id=exercise_id).first()
-    response = {"message": "No score found.", "status": "Error"}
-    if not score:
-        return jsonify(response), 404
-
-    score.correct = data["correct"]
-    db.session.add(score)
-    db.session.commit()
-    response["message"] = "Score was updated!"
-    response["status"] = "Success"
-    response["data"] = score.to_json()
-    return jsonify(response), 200
+    try:
+        score = Score.query.filter_by(exercise_id=exercise_id).first()
+        if score:
+            response = {"message": "Score was updated!", "status": "Success"}
+            score.correct = data["correct"]
+            db.session.add(score)
+            db.session.commit()
+            response["data"] = score.to_json()
+            return jsonify(response), 200
+        else:
+            db.session.add(Score(user_id=auth_response['data']['id'],
+                                 exercise_id=exercise_id,
+                                 correct=data['correct']))
+            db.session.commit()
+            response = {"message": "New score was added!", "status": "Success"}
+            return jsonify(response), 201
+    except (exc.IntegrityError, ValueError, TypeError):
+        db.session().rollback()
+        return {"message": "An error occurred.", "status": "fail"}

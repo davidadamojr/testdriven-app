@@ -26,7 +26,7 @@ env:
   EXERCISES_DB_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/exercises/project/db
   SCORES: test-driven-scores
   SCORES_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/scores
-  SCORES_DB: test-driven-scores-db
+  SCORES_DB: test-driven-scores_db
   SCORES_DB_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:services/scores/project/db
   SECRET_KEY: my_precious
 

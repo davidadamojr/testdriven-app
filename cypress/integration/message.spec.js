@@ -6,6 +6,9 @@ const password = 'greaterthanten';
 
 describe('Message', () => {
     it('should display flash messages correctly', () => {
+        cy.server();
+        cy.route('POST', 'auth/login').as('loginUser');
+
         // register user
         cy
           .visit('/register')
@@ -41,7 +44,7 @@ describe('Message', () => {
           .get('input[name="email"]').clear().type(email)
           .get('input[name="password"]').clear().type(password)
           .get('input[type="submit"]').click()
-          .wait(100);
+          .wait('@loginUser');
         
         // assert flash message is removed when a new message is flashed
         cy
@@ -58,7 +61,7 @@ describe('Message', () => {
           .get('input[name="email"]').type(email)
           .get('input[name="password"]').type(password)
           .get('input[type="submit"]').click()
-          .wait(80);
+          .wait('@loginUser');
 
         // assert flash message is removed after three seconds
         cy

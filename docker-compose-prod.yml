@@ -109,11 +109,11 @@ services:
           - exercises
    
    scores-db:
-   build:
-      context: ./services/scores/project/db
-      dockerfile: Dockerfile
-   ports:
-      - 5437:5432
-   environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      build:
+         context: ./services/scores/project/db
+         dockerfile: Dockerfile
+      ports:
+         - 5437:5432
+      environment:
+         - POSTGRES_USER=postgres
+         - POSTGRES_PASSWORD=postgres

@@ -10,6 +10,5 @@ base_blueprint = Blueprint("base", __name__)
 
 
 @base_blueprint.route("/scores/ping", methods=["GET"])
-@authenticate
 def ping_pong(resp):
     return jsonify({"status": "success", "message": "pong!"})
